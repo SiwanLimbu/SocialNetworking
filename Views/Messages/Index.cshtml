@@ -1,0 +1,156 @@
+﻿@*@model List<SocialNetwork.DatabaseContent.Friend>*@
+@model List<SocialNetwork.DatabaseContent.User>
+<!--Messages-->
+@{
+    ViewBag.Title = "Index";
+
+
+}
+<style>
+    .message-box > .chattingPerson {
+        float: right
+    }
+
+    .chattingPerson > h4 {
+        color: blue;
+    }
+</style>
+
+<div class="col-lg-6" style="margin:auto">
+    <div class="central-meta">
+        <div class="messages">
+            <h5 class="f-title"><i class="ti-bell"></i>All Users @*<span class="more-options"><i class="fa fa-ellipsis-h"></i>@*</span>*@</h5>
+            <div class="message-box">
+                <ul class="peoples">
+                    @foreach (var data in Model)
+                    {
+                        <li>
+                            <a class="ViewMessage" data-url="@Url.Action("ChatHistory", new { userID = data.userID })">
+                                @*<a class="ViewMessage" data-url="@Url.Action("ChatHistory", new { userID = data.userID })">*@
+                                @*<a class="ViewMessage" data-url="@Url.Action("ChatHistory", new { userID = Session["id"] })">*@
+                                <figure>
+                                    @*<a href="@Url.Action("readID", new {id=data.friendID})"><img src="@(data.User.userPhoto != null ? Url.Content(data.Users.userPhoto):"")" alt="" )</a>*@
+                                    <img src="@(data.userPhoto != null ? Url.Content(data.userPhoto):"")" alt="" ) />
+                                    @*<span class="status f-online"></span>*@
+                                </figure>
+                                <div class="people-name">
+                                    <span>@(data.userFirstName) @(data.userLastName)</span>
+                                    @*<a href="@Url.Action("toGEtId", new {name=data.userID})"><span id="getUserName" onclick="getUserName((this.textContent || this.innerTEXT),@data.userID)">@(data.userFirstName) @(data.userLastName)</span></a>*@
+                                    @*<span id="getUserName" onclick="getUserName((this.textContent || this.innerTEXT),@data.userID)">*@@*<a href="@Url.Action("readID", new {id=data.userID})">*@@*<span>@(data.userFirstName) @(data.userLastName)</span>*@@*</a>*@@*@(data.userFirstName) @(data.userLastName)*@@*<label id="getUserID" value="@data.userID">@(data.userID)</label>*@@*</span>*@
+                                </div>
+                            </a>
+                        </li>
+                    }
+                    @*<li>
+                            <figure>
+                                <img src="~/Content/socialMedia/images/resources/friend-avatar3.jpg" alt="">
+                                <span class="status f-away"></span>
+                            </figure>
+                            <div class="people-name">
+                                <span>Andrew</span>
+                            </div>
+                        </li>
+                        <li>
+
+                            <figure>
+                                <img src="~/Content/socialMedia/images/resources/friend-avatar.jpg" alt="">
+                                <span class="status f-online"></span>
+                            </figure>
+
+                            <div class="people-name">
+                                <span>jason bourne</span>
+                            </div>
+                        </li>
+                        <li>
+
+                            <figure>
+                                <img src="~/Content/socialMedia/images/resources/friend-avatar4.jpg" alt="">
+                                <span class="status off-online"></span>
+                            </figure>
+                            <div class="people-name">
+                                <span>Sarah Grey</span>
+                            </div>
+                        </li>
+                        <li>
+
+                            <figure>
+                                <img src="~/Content/socialMedia/images/resources/friend-avatar5.jpg" alt="">
+                                <span class="status f-online"></span>
+                            </figure>
+                            <div class="people-name">
+                                <span>bill doe</span>
+                            </div>
+                        </li>
+                        <li>
+
+                            <figure>
+                                <img src="~/Content/socialMedia/images/resources/friend-avatar6.jpg" alt="">
+                                <span class="status f-away"></span>
+                            </figure>
+                            <div class="people-name">
+                                <span>shen cornery</span>
+                            </div>
+                        </li>
+                        <li>
+
+                            <figure>
+                                <img src="~/Content/socialMedia/images/resources/friend-avatar7.jpg" alt="">
+                                <span class="status off-online"></span>
+                            </figure>
+                            <div class="people-name">
+                                <span>kill bill</span>
+                            </div>
+                        </li>
+                        <li>
+
+                            <figure>
+                                <img src="~/Content/socialMedia/images/resources/friend-avatar8.jpg" alt="">
+                                <span class="status f-online"></span>
+                            </figure>
+                            <div class="people-name">
+                                <span>jasmin walia</span>
+                            </div>
+                        </li>
+                        <li>
+
+                            <figure>
+                                <img src="~/Content/socialMedia/images/resources/friend-avatar6.jpg" alt="">
+                                <span class="status f-online"></span>
+                            </figure>
+                            <div class="people-name">
+                                <span>neclos cage</span>
+                            </div>
+                        </li>*@
+                </ul>
+                @*<div class="chattingPerson">
+                    <h5>You are chatting with</h5>
+                    <h4 id="print"></h4>
+                    <h4 id="print1"></h4>
+                </div>*@
+                <div class="message-text-container">
+                    @{Html.RenderAction("ChatHistory", new { userID = Model.FirstOrDefault()?.userID });}
+                    @*@{Html.RenderAction("ChatHistory", new { userID = Model.FirstOrDefault()?.userID });}*@
+                    @*@{Html.RenderAction("ChatHistory", new { userID = Session["id"] });}*@
+                    @*@Html.Partial("ChatHistory", Model.FirstOrDefault()?.)*@
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- centerl meta -->
+
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
+<script>
+    $(document).on('click', ".ViewMessage", function () {
+        $("#ChatHistory").load($(this).data("url"));
+    });
+</script>
+<script>
+    function getUserName(userNName, ui) {
+        document.getElementById("print").innerHTML = userNName;
+        var uID = ui;
+        /*var uID = document.getElementById("getUserID").value;*/
+        document.getElementById("print1").innerHTML = uID;
+    }
+</script>

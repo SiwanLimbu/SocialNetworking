@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="socialNetworkModelStoreContainer" CdmEntityContainer="socialNetworkEntities">
+    <EntitySetMapping Name="Messages">
+      <EntityTypeMapping TypeName="socialNetworkModel.Message">
+        <MappingFragment StoreEntitySet="Messages">
+          <ScalarProperty Name="currentUserMessage" ColumnName="currentUserMessage" />
+          <ScalarProperty Name="toUserID" ColumnName="toUserID" />
+          <ScalarProperty Name="fromUserID" ColumnName="fromUserID" />
+          <ScalarProperty Name="messageID" ColumnName="messageID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Posts">
+      <EntityTypeMapping TypeName="socialNetworkModel.Post">
+        <MappingFragment StoreEntitySet="Posts">
+          <ScalarProperty Name="posterName" ColumnName="posterName" />
+          <ScalarProperty Name="posterID" ColumnName="posterID" />
+          <ScalarProperty Name="postImg" ColumnName="postImg" />
+          <ScalarProperty Name="postCaption" ColumnName="postCaption" />
+          <ScalarProperty Name="postID" ColumnName="postID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="socialNetworkModel.User">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="userCountry" ColumnName="userCountry" />
+          <ScalarProperty Name="userState" ColumnName="userState" />
+          <ScalarProperty Name="userCity" ColumnName="userCity" />
+          <ScalarProperty Name="userDOB" ColumnName="userDOB" />
+          <ScalarProperty Name="userPhoto" ColumnName="userPhoto" />
+          <ScalarProperty Name="userPhone" ColumnName="userPhone" />
+          <ScalarProperty Name="userGender" ColumnName="userGender" />
+          <ScalarProperty Name="userEmail" ColumnName="userEmail" />
+          <ScalarProperty Name="userPassword" ColumnName="userPassword" />
+          <ScalarProperty Name="userUserName" ColumnName="userUserName" />
+          <ScalarProperty Name="userLastName" ColumnName="userLastName" />
+          <ScalarProperty Name="userFirstName" ColumnName="userFirstName" />
+          <ScalarProperty Name="userID" ColumnName="userID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

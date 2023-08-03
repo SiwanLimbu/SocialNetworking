@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="socialNetworkModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Messages">
+    <Key>
+      <PropertyRef Name="messageID" />
+    </Key>
+    <Property Name="messageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="fromUserID" Type="int" />
+    <Property Name="toUserID" Type="int" />
+    <Property Name="currentUserMessage" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="Posts">
+    <Key>
+      <PropertyRef Name="postID" />
+    </Key>
+    <Property Name="postID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="postCaption" Type="nvarchar" MaxLength="100" />
+    <Property Name="postImg" Type="nvarchar" MaxLength="300" />
+    <Property Name="posterID" Type="int" />
+    <Property Name="posterName" Type="nvarchar" MaxLength="30" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="userID" />
+    </Key>
+    <Property Name="userID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="userFirstName" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="userLastName" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="userUserName" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="userPassword" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="userEmail" Type="nvarchar" MaxLength="30" />
+    <Property Name="userGender" Type="nvarchar" MaxLength="10" />
+    <Property Name="userPhone" Type="int" />
+    <Property Name="userPhoto" Type="nvarchar" MaxLength="300" />
+    <Property Name="userDOB" Type="nvarchar" MaxLength="20" />
+    <Property Name="userCity" Type="nvarchar" MaxLength="20" />
+    <Property Name="userState" Type="nvarchar" MaxLength="30" />
+    <Property Name="userCountry" Type="nvarchar" MaxLength="20" />
+  </EntityType>
+  <Association Name="FK__Messages__fromUs__17F790F9">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="userID" />
+      </Principal>
+      <Dependent Role="Messages">
+        <PropertyRef Name="fromUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Messages__toUser__18EBB532">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="userID" />
+      </Principal>
+      <Dependent Role="Messages">
+        <PropertyRef Name="toUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Posts__posterID__2180FB33">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Posts" Type="Self.Posts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="userID" />
+      </Principal>
+      <Dependent Role="Posts">
+        <PropertyRef Name="posterID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="socialNetworkModelStoreContainer">
+    <EntitySet Name="Messages" EntityType="Self.Messages" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Posts" EntityType="Self.Posts" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Messages__fromUs__17F790F9" Association="Self.FK__Messages__fromUs__17F790F9">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Messages" EntitySet="Messages" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Messages__toUser__18EBB532" Association="Self.FK__Messages__toUser__18EBB532">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Messages" EntitySet="Messages" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Posts__posterID__2180FB33" Association="Self.FK__Posts__posterID__2180FB33">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Posts" EntitySet="Posts" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

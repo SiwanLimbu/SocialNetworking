@@ -1,0 +1,212 @@
+﻿@{
+    ViewBag.Title = "loginPage";
+    Layout = null;
+}
+<html>
+<head>
+    <title>Winku Login</title>
+    @*<link rel="stylesheet" href="~/Content/AdminPannel/adminLoginPage/adminLoginPageCss.css" />*@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color:#597199;
+            color:white;
+        }
+
+        .loginBox {
+            height: 400px;
+            width: 50%;
+            background-color: #CAD1C9;
+            border-radius: 10px;
+            box-shadow: 10px 10px 30px 10px #DDDEE3;
+            margin-top: 180px;
+            margin-left: 400px;
+            display: flex;
+        }
+
+        .forLogo {
+            height: 350px;
+            width: 40%;
+            background-color: #CAD1C9;
+        }
+
+            .forLogo img {
+                height: 200px;
+                width: 200px;
+                margin-top: 120px;
+                margin-left: 45px;
+                margin-right: 50px;
+            }
+
+        .forerror {
+            height: 40px;
+            width: 350px;
+            background-color: #CAD1C9;
+            margin-left: 20px;
+            border-radius: 10px;
+            padding-top: 13px;
+            display: flex;
+            border: 1px solid #D84943;
+            margin-top: 15px;
+            visibility: hidden;
+        }
+        .forForm {
+            background-color: #CAD1C9;
+        }
+        #mainform1 {
+            background-color: #CAD1C9;
+        }
+
+        .icon {
+            margin-left: 50px;
+            font-size: 20px;
+            color: #D84943;
+            margin-top: 1px;
+            background-color: #CAD1C9;
+        }
+
+        .text {
+            margin-left: 20px;
+            color: #FFE0DD;
+            font-size: 20px;
+            font-family: 'Poppins', sans-serif;
+            background-color: #CAD1C9;
+        }
+
+        .formValue {
+            margin-top: 1px;
+            margin-left: 20px;
+            background-color: #CAD1C9;
+        }
+
+        label {
+            font-size: 20px;
+            font-family: 'Poppins', sans-serif;
+            color: black;
+            background-color:transparent;
+        }
+
+        input {
+            height: 50px;
+            border-radius: 10px;
+            border-style: none;
+            border: 1px solid black;
+            margin-top: 5px;
+            width: 350px;
+            padding-left: 20px;
+            font-size: 20px;
+            color: black;
+            font-family: 'Poppins', sans-serif;
+            background-color: #CAD1C9;
+        }
+
+        button {
+            margin-top: 30px;
+            width: 350px;
+            height: 50px;
+            background-color: #1D306D;
+            font-size: 20px;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            border-radius: 10px;
+            border-style: none;
+            border: 1px solid #696969;
+        }
+
+            button:hover {
+                background-color: black;
+                cursor:pointer;
+            }
+        .registerNow {
+            text-decoration: none;
+            background-color: #CAD1C9;
+            font-size: 20px;
+            color: #1D306D;
+        }
+        .registerNow :hover{
+            font-size:25px;
+            cursor:pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="loginBox">
+
+        <div class="forLogo">
+            <img src="~/Content/socialMedia/images/wink.png" />
+        </div>
+        <div class="forForm" style="background-color: #CAD1C9; width: 100%; margin-left: 10px; ">
+            <div class="forerror" id="errorBox">
+                <div class="icon" id="errorIcon">
+                    <i class="fa fa-exclamation-triangle"></i>
+                </div>
+                <div class="text">
+                    <p id="errorMessage"></p>
+                </div>
+
+
+            </div>
+            <div class="formValue">
+                @using (Html.BeginForm("checkID", "Login", FormMethod.Post, new { id = "mainform1" }))
+                {
+                    @*<label>User Id</label>*@
+                    <br />
+                    <input type="text" placeholder="User ID" id="userID" name="userID" style="margin-bottom:20px;" />
+                    <br />
+                    <input type="text" placeholder="Username" id="userUserName" name="userUserName" /><br/>
+                    @*<label>Password</label>*@
+                    <br />
+                    <input type="password" placeholder="Password" id="userPassword" name="userPassword" />
+                    <br />
+                    <button onclick=" return checkEmpty();">Log In</button><br/><br/>
+                    <a href="@Url.Action("Index", "SignUp")" class="registerNow">Register Now</a>
+                }
+
+            </div>
+            
+        </div>
+    </div>
+    <script>
+        checkIdPassword();
+        function checkEmpty() {
+            var idValue = document.getElementById("userID").value;
+            var pwValue = document.getElementById("userPassword").value;
+            if (idValue == "" && pwValue == "") {
+                document.getElementById("errorBox").style.visibility = "Visible";
+                document.getElementById("errorMessage").innerHTML = "Empty Id and Password "
+                document.getElementById("errorIcon").style.visibility = "Visible";
+                return false;
+            }
+            else if (idValue == "") {
+                document.getElementById("errorBox").style.visibility = "Visible";
+                document.getElementById("errorMessage").innerHTML = "Id cannot be Empty "
+                document.getElementById("errorIcon").style.visibility = "Visible";
+                return false;
+            }
+            else if (pwValue == "") {
+                document.getElementById("errorBox").style.visibility = "Visible";
+                document.getElementById("errorMessage").innerHTML = "Password cannot be Empty "
+                document.getElementById("errorIcon").style.visibility = "Visible";
+                return false;
+            }
+            else {
+                $("#mainform1").submit();
+            }
+        }
+        function checkIdPassword()
+        {
+            if ("@Session["error1"]" == "false") {
+                document.getElementById("errorBox").style.visibility = "Visible";
+                document.getElementById("errorMessage").innerHTML = "Incorrect Id or Password";
+                document.getElementById("errorIcon").style.visibility = "Visible";
+            }
+
+        }
+
+    </script>
+</body>
+</html>

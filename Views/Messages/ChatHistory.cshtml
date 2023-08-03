@@ -1,0 +1,65 @@
+﻿@model List<SocialNetwork.DatabaseContent.Message>
+
+<div id="ChatHistory" data-url="@Url.Action("ChatHistory",null, new { userID=ViewBag.userID  })">
+    @if (Model != null)
+     {
+        <div class="peoples-mesg-box">
+            <p>@Session["id"]</p>
+            <div class="conversation-head">
+                @*<figure><img src="~/Content/socialMedia/images/resources/friend-avatar.jpg" alt=""></figure>
+                <span><i>online</i></span>*@
+
+            </div>
+            @*<div id="chattingContainer">*@
+                <ul class="chatting-area">
+                    
+                    @foreach (var data in Model)
+                    {
+                        //if (data.fromUserID == Convert.ToInt32(Session["currentUserID"]) && data.toUserID == Convert.ToInt32(Session["id"]))
+                        //{
+                        //var myName = data.User.userUserName;
+                        //if (data.toUserID != Convert.ToInt32(Session["currentUserID"]))
+                        if (data.toUserID != Convert.ToInt32(Session["currentUserID"]))
+                        //if (int.TryParse(data.toUserID, out var toUserID) != Session["currentUserID"]){ }
+                        {
+                            <li class="me">
+                                <figure><img src="@(data.User.userPhoto != null ? Url.Content(data.User.userPhoto):"")" alt=""></figure>
+                                @*<p>what's liz short for? :)</p>*@
+                                <p>@Html.DisplayFor(model => data.currentUserMessage)</p>
+                            </li>
+                            }
+                            else
+                            {
+                            <li class="you">
+                                @*<figure><img src="~/Content/socialMedia/images/resources/userlist-1.jpg" alt=""></figure>*@
+                                <figure><img src="@(data.User.userPhoto != null ? Url.Content(data.User.userPhoto):"")" alt=""></figure>
+                                @*<p>Elizabeth lol</p>*@
+                                <p>@Html.DisplayFor(model => data.currentUserMessage)</p>
+                                @*<p>@Html.DisplayFor(model => data.fromUserID)</p>*@
+                            </li>
+                            }
+                            //}
+                        }
+                </ul>
+                <div class="message-text-container">
+                    @using (Html.BeginForm("SendMessage", "Messages", FormMethod.Post, new { @class = "ajaxSubmit", @data_callback = "RefreshChat" }))
+                    {
+                        <input type="hidden" name="toUserID" value="@ViewBag.userID" />
+                        <textarea name="currentUserMessage"></textarea>
+                        <button type="submit" title="send"><i class="fa fa-paper-plane"></i></button>
+                    }
+                </div>
+            @*</div>*@
+        </div>
+     }
+</div>
+<!--<script>-->
+    @*function checkUser(fromUserID, toUserID) {
+        if (@Session["currentUserID"]== Messages.fromUserID && selectedUserID == Messages.toUserID) {
+            document.getElementById("chattingContainer").style.visibility = show;
+        }
+        else {
+            document.getElementById("chattingContainer").style.visibility = none;
+        }
+    }*@
+<!--</script>-->

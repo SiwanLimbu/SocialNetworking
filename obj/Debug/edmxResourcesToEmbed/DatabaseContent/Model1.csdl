@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="socialNetworkModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="socialNetworkEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Messages" EntityType="socialNetworkModel.Message" />
+    <EntitySet Name="Posts" EntityType="socialNetworkModel.Post" />
+    <EntitySet Name="Users" EntityType="socialNetworkModel.User" />
+    <AssociationSet Name="FK__Messages__fromUs__17F790F9" Association="socialNetworkModel.FK__Messages__fromUs__17F790F9">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Message" EntitySet="Messages" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Messages__toUser__18EBB532" Association="socialNetworkModel.FK__Messages__toUser__18EBB532">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Message" EntitySet="Messages" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Posts__posterID__2180FB33" Association="socialNetworkModel.FK__Posts__posterID__2180FB33">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Post" EntitySet="Posts" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Message">
+    <Key>
+      <PropertyRef Name="messageID" />
+    </Key>
+    <Property Name="messageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="fromUserID" Type="Int32" />
+    <Property Name="toUserID" Type="Int32" />
+    <Property Name="currentUserMessage" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="User" Relationship="socialNetworkModel.FK__Messages__fromUs__17F790F9" FromRole="Message" ToRole="User" />
+    <NavigationProperty Name="User1" Relationship="socialNetworkModel.FK__Messages__toUser__18EBB532" FromRole="Message" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Post">
+    <Key>
+      <PropertyRef Name="postID" />
+    </Key>
+    <Property Name="postID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="postCaption" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="postImg" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="posterID" Type="Int32" />
+    <Property Name="posterName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="User" Relationship="socialNetworkModel.FK__Posts__posterID__2180FB33" FromRole="Post" ToRole="User" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="userID" />
+    </Key>
+    <Property Name="userID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="userFirstName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="userLastName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="userUserName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="userPassword" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="userEmail" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="userGender" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="userPhone" Type="Int32" />
+    <Property Name="userPhoto" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="userDOB" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="userCity" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="userState" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="userCountry" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Messages" Relationship="socialNetworkModel.FK__Messages__fromUs__17F790F9" FromRole="User" ToRole="Message" />
+    <NavigationProperty Name="Messages1" Relationship="socialNetworkModel.FK__Messages__toUser__18EBB532" FromRole="User" ToRole="Message" />
+    <NavigationProperty Name="Posts" Relationship="socialNetworkModel.FK__Posts__posterID__2180FB33" FromRole="User" ToRole="Post" />
+  </EntityType>
+  <Association Name="FK__Messages__fromUs__17F790F9">
+    <End Type="socialNetworkModel.User" Role="User" Multiplicity="0..1" />
+    <End Type="socialNetworkModel.Message" Role="Message" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="userID" />
+      </Principal>
+      <Dependent Role="Message">
+        <PropertyRef Name="fromUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Messages__toUser__18EBB532">
+    <End Type="socialNetworkModel.User" Role="User" Multiplicity="0..1" />
+    <End Type="socialNetworkModel.Message" Role="Message" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="userID" />
+      </Principal>
+      <Dependent Role="Message">
+        <PropertyRef Name="toUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Posts__posterID__2180FB33">
+    <End Type="socialNetworkModel.User" Role="User" Multiplicity="0..1" />
+    <End Type="socialNetworkModel.Post" Role="Post" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="userID" />
+      </Principal>
+      <Dependent Role="Post">
+        <PropertyRef Name="posterID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

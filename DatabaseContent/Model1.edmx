@@ -1,0 +1,267 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="socialNetworkModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Messages">
+          <Key>
+            <PropertyRef Name="messageID" />
+          </Key>
+          <Property Name="messageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fromUserID" Type="int" />
+          <Property Name="toUserID" Type="int" />
+          <Property Name="currentUserMessage" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Posts">
+          <Key>
+            <PropertyRef Name="postID" />
+          </Key>
+          <Property Name="postID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="postCaption" Type="nvarchar" MaxLength="100" />
+          <Property Name="postImg" Type="nvarchar" MaxLength="300" />
+          <Property Name="posterID" Type="int" />
+          <Property Name="posterName" Type="nvarchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="userID" />
+          </Key>
+          <Property Name="userID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userFirstName" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="userLastName" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="userUserName" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="userPassword" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="userEmail" Type="nvarchar" MaxLength="30" />
+          <Property Name="userGender" Type="nvarchar" MaxLength="10" />
+          <Property Name="userPhone" Type="int" />
+          <Property Name="userPhoto" Type="nvarchar" MaxLength="300" />
+          <Property Name="userDOB" Type="nvarchar" MaxLength="20" />
+          <Property Name="userCity" Type="nvarchar" MaxLength="20" />
+          <Property Name="userState" Type="nvarchar" MaxLength="30" />
+          <Property Name="userCountry" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <Association Name="FK__Messages__fromUs__17F790F9">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="Messages">
+              <PropertyRef Name="fromUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Messages__toUser__18EBB532">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="Messages">
+              <PropertyRef Name="toUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Posts__posterID__2180FB33">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Posts" Type="Self.Posts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="Posts">
+              <PropertyRef Name="posterID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="socialNetworkModelStoreContainer">
+          <EntitySet Name="Messages" EntityType="Self.Messages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Posts" EntityType="Self.Posts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Messages__fromUs__17F790F9" Association="Self.FK__Messages__fromUs__17F790F9">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Messages" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Messages__toUser__18EBB532" Association="Self.FK__Messages__toUser__18EBB532">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Messages" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Posts__posterID__2180FB33" Association="Self.FK__Posts__posterID__2180FB33">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Posts" EntitySet="Posts" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="socialNetworkModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="socialNetworkEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Messages" EntityType="socialNetworkModel.Message" />
+          <EntitySet Name="Posts" EntityType="socialNetworkModel.Post" />
+          <EntitySet Name="Users" EntityType="socialNetworkModel.User" />
+          <AssociationSet Name="FK__Messages__fromUs__17F790F9" Association="socialNetworkModel.FK__Messages__fromUs__17F790F9">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Message" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Messages__toUser__18EBB532" Association="socialNetworkModel.FK__Messages__toUser__18EBB532">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Message" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Posts__posterID__2180FB33" Association="socialNetworkModel.FK__Posts__posterID__2180FB33">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Post" EntitySet="Posts" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Message">
+          <Key>
+            <PropertyRef Name="messageID" />
+          </Key>
+          <Property Name="messageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fromUserID" Type="Int32" />
+          <Property Name="toUserID" Type="Int32" />
+          <Property Name="currentUserMessage" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="User" Relationship="socialNetworkModel.FK__Messages__fromUs__17F790F9" FromRole="Message" ToRole="User" />
+          <NavigationProperty Name="User1" Relationship="socialNetworkModel.FK__Messages__toUser__18EBB532" FromRole="Message" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Post">
+          <Key>
+            <PropertyRef Name="postID" />
+          </Key>
+          <Property Name="postID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="postCaption" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="postImg" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="posterID" Type="Int32" />
+          <Property Name="posterName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="User" Relationship="socialNetworkModel.FK__Posts__posterID__2180FB33" FromRole="Post" ToRole="User" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="userID" />
+          </Key>
+          <Property Name="userID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userFirstName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="userLastName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="userUserName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="userPassword" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="userEmail" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="userGender" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="userPhone" Type="Int32" />
+          <Property Name="userPhoto" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="userDOB" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="userCity" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="userState" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="userCountry" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Messages" Relationship="socialNetworkModel.FK__Messages__fromUs__17F790F9" FromRole="User" ToRole="Message" />
+          <NavigationProperty Name="Messages1" Relationship="socialNetworkModel.FK__Messages__toUser__18EBB532" FromRole="User" ToRole="Message" />
+          <NavigationProperty Name="Posts" Relationship="socialNetworkModel.FK__Posts__posterID__2180FB33" FromRole="User" ToRole="Post" />
+        </EntityType>
+        <Association Name="FK__Messages__fromUs__17F790F9">
+          <End Type="socialNetworkModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="socialNetworkModel.Message" Role="Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="fromUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Messages__toUser__18EBB532">
+          <End Type="socialNetworkModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="socialNetworkModel.Message" Role="Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="toUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Posts__posterID__2180FB33">
+          <End Type="socialNetworkModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="socialNetworkModel.Post" Role="Post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="Post">
+              <PropertyRef Name="posterID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="socialNetworkModelStoreContainer" CdmEntityContainer="socialNetworkEntities">
+          <EntitySetMapping Name="Messages">
+            <EntityTypeMapping TypeName="socialNetworkModel.Message">
+              <MappingFragment StoreEntitySet="Messages">
+                <ScalarProperty Name="currentUserMessage" ColumnName="currentUserMessage" />
+                <ScalarProperty Name="toUserID" ColumnName="toUserID" />
+                <ScalarProperty Name="fromUserID" ColumnName="fromUserID" />
+                <ScalarProperty Name="messageID" ColumnName="messageID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Posts">
+            <EntityTypeMapping TypeName="socialNetworkModel.Post">
+              <MappingFragment StoreEntitySet="Posts">
+                <ScalarProperty Name="posterName" ColumnName="posterName" />
+                <ScalarProperty Name="posterID" ColumnName="posterID" />
+                <ScalarProperty Name="postImg" ColumnName="postImg" />
+                <ScalarProperty Name="postCaption" ColumnName="postCaption" />
+                <ScalarProperty Name="postID" ColumnName="postID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="socialNetworkModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="userCountry" ColumnName="userCountry" />
+                <ScalarProperty Name="userState" ColumnName="userState" />
+                <ScalarProperty Name="userCity" ColumnName="userCity" />
+                <ScalarProperty Name="userDOB" ColumnName="userDOB" />
+                <ScalarProperty Name="userPhoto" ColumnName="userPhoto" />
+                <ScalarProperty Name="userPhone" ColumnName="userPhone" />
+                <ScalarProperty Name="userGender" ColumnName="userGender" />
+                <ScalarProperty Name="userEmail" ColumnName="userEmail" />
+                <ScalarProperty Name="userPassword" ColumnName="userPassword" />
+                <ScalarProperty Name="userUserName" ColumnName="userUserName" />
+                <ScalarProperty Name="userLastName" ColumnName="userLastName" />
+                <ScalarProperty Name="userFirstName" ColumnName="userFirstName" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
